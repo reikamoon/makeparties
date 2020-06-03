@@ -17,6 +17,11 @@ app.get('/', (req, res) => {
   res.render('home', { msg: 'Handlebars are Cool!' });
 })
 
+// Tell our app to send the "hello world" message to our home page
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
+
 // Choose a port to listen on
 const port = process.env.PORT || 3000;
 
