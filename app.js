@@ -1,5 +1,6 @@
 // INITIALIZE BODY-PARSER AND ADD IT TO APP
 const bodyParser = require('body-parser');
+const models = require('./db/models');
 
 // Initialize express
 const express = require('express')
@@ -32,7 +33,9 @@ var events = [
 
 // INDEX
 app.get('/', (req, res) => {
-  res.render('events-index', { events: events });
+  models.Event.findAll({ order: [['createdAt', 'DESC']] }).then(events => {
+    res.render('events-index', { events: events });
+  })
 })
 
 // NEW
@@ -43,6 +46,15 @@ app.get('/events/new', (req, res) => {
 // CREATE
 app.post('/events', (req, res) => {
   console.log(req.body);
+})
+
+// CREATE
+app.post('/events', (req, res) => {
+  models.Event.create(req.body).then(event => {
+    res.redirect(`/`);
+  }).catch((err) => {
+    console.log(err)
+  });
 })
 
 // Tell our app to send the "hello world" message to our home page
