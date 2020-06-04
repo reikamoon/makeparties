@@ -29,6 +29,11 @@ app.get('/', (req, res) => {
   res.render('events-index', { events: events });
 })
 
+// NEW
+app.get('/events/new', (req, res) => {
+  res.render('events-new', {});
+})
+
 
 // Tell our app to send the "hello world" message to our home page
 // app.get('/', (req, res) => {
