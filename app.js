@@ -1,6 +1,12 @@
+// INITIALIZE BODY-PARSER AND ADD IT TO APP
+const bodyParser = require('body-parser');
+
 // Initialize express
 const express = require('express')
 const app = express()
+
+// The following line must appear AFTER const app = express() and before your routes!
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // require handlebars
 var exphbs = require('express-handlebars');
@@ -34,6 +40,10 @@ app.get('/events/new', (req, res) => {
   res.render('events-new', {});
 })
 
+// CREATE
+app.post('/events', (req, res) => {
+  console.log(req.body);
+})
 
 // Tell our app to send the "hello world" message to our home page
 // app.get('/', (req, res) => {
