@@ -15,6 +15,7 @@ app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: true }));
 
 require('./controllers/events')(app, models);
+require('./controllers/rsvps')(app, models);
 
 
 const handlebars = require('handlebars');
