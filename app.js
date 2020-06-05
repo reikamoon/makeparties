@@ -7,7 +7,6 @@ const app = express()
 const bodyParser = require('body-parser');
 const models = require('./db/models');
 
-
 // override with POST having ?_method=DELETE or ?_method=PUT
 app.use(methodOverride('_method'))
 
