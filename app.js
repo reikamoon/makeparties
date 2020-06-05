@@ -9,13 +9,28 @@ const app = express()
 // The following line must appear AFTER const app = express() and before your routes!
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// require handlebars
-var exphbs = require('express-handlebars');
+const handlebars = require('handlebars');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const exphbs = require('express-handlebars');
+const hbs = exphbs.create({
+    defaultLayout: 'main',
+    handlebars: allowInsecurePrototypeAccess(handlebars),
+});
 
-// Use "main" as our default layout
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-// Use handlebars to render
+app.engine('handlebars', hbs.engine); 
 app.set('view engine', 'handlebars');
+
+app.use(bodyParser.urlencoded({ extended: true })); 
+// app.use(methodOverride('_method'));
+
+//
+// // require handlebars
+// var exphbs = require('express-handlebars');
+//
+// // Use "main" as our default layout
+// app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+// // Use handlebars to render
+// app.set('view engine', 'handlebars');
 
 // app.js
 
@@ -33,8 +48,12 @@ var events = [
 
 // INDEX
 app.get('/', (req, res) => {
+  console.log("Test")
   models.Event.findAll({ order: [['createdAt', 'DESC']] }).then(events => {
-    res.render('events-index', { events: events });
+    const context = {
+      events:events
+    }
+    res.render('events-index', { events:context.events });
   })
 })
 
@@ -43,10 +62,10 @@ app.get('/events/new', (req, res) => {
   res.render('events-new', {});
 })
 
-// CREATE
-app.post('/events', (req, res) => {
-  console.log(req.body);
-})
+// // CREATE
+// app.post('/events', (req, res) => {
+//   console.log(req.body);
+// })
 
 // CREATE
 app.post('/events', (req, res) => {
