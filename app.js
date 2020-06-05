@@ -111,6 +111,16 @@ app.put('/events/:id', (req, res) => {
   });
 });
 
+// DELETE
+app.delete('/events/:id', (req, res) => {
+  models.Event.findByPk(req.params.id).then(event => {
+    event.destroy();
+    res.redirect(`/`);
+  }).catch((err) => {
+    console.log(err);
+  });
+})
+
 // Tell our app to send the "hello world" message to our home page
 // app.get('/', (req, res) => {
 //   res.send('Hello World!')
