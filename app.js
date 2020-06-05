@@ -4,7 +4,11 @@ const models = require('./db/models');
 
 // Initialize express
 const express = require('express')
+const methodOverride = require('method-override')
 const app = express()
+
+// override with POST having ?_method=DELETE or ?_method=PUT
+app.use(methodOverride('_method'))
 
 // The following line must appear AFTER const app = express() and before your routes!
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -62,12 +66,6 @@ app.get('/events/new', (req, res) => {
   res.render('events-new', {});
 })
 
-// // CREATE
-// app.post('/events', (req, res) => {
-//   console.log(req.body);
-// })
-
-// CREATE
 // CREATE
 app.post('/events', (req, res) => {
   models.Event.create(req.body).then(event => {
@@ -78,7 +76,6 @@ app.post('/events', (req, res) => {
     console.log(err)
   });
 })
-
 
 // SHOW
 app.get('/events/:id', (req, res) => {
@@ -91,6 +88,28 @@ app.get('/events/:id', (req, res) => {
     console.log(err.message);
   })
 })
+
+// EDIT
+app.get('/events/:id/edit', (req, res) => {
+  models.Event.findByPk(req.params.id).then((event) => {
+    res.render('events-edit', { event: event });
+  }).catch((err) => {
+    console.log(err.message);
+  })
+});
+
+// UPDATE
+app.put('/events/:id', (req, res) => {
+  models.Event.findByPk(req.params.id).then(event => {
+    event.update(req.body).then(event => {
+      res.redirect(`/events/${req.params.id}`);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }).catch((err) => {
+    console.log(err);
+  });
+});
 
 // Tell our app to send the "hello world" message to our home page
 // app.get('/', (req, res) => {
