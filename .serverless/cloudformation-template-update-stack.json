@@ -118,6 +118,25 @@
                       "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/express-app-dev*:*:*"
                     }
                   ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:DescribeTable",
+                    "dynamodb:Query",
+                    "dynamodb:Scan",
+                    "dynamodb:GetItem",
+                    "dynamodb:PutItem",
+                    "dynamodb:UpdateItem",
+                    "dynamodb:DeleteItem",
+                    "lambda:InvokeAsync",
+                    "lambda:InvokeFunction",
+                    "lambda:ListFunction"
+                  ],
+                  "Resource": [
+                    "arn:aws:dynamodb:us-east-1:*:*",
+                    "arn:aws:lambda:us-east-1:*:*"
+                  ]
                 }
               ]
             }
@@ -146,7 +165,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/express-app/dev/1606529978539-2020-11-28T02:19:38.539Z/express-app.zip"
+          "S3Key": "serverless/express-app/dev/1607550848429-2020-12-09T21:54:08.429Z/express-app.zip"
         },
         "FunctionName": "express-app-dev-app",
         "Handler": "app.handler",
@@ -157,21 +176,21 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs13.12",
         "Timeout": 6
       },
       "DependsOn": [
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionFHI1uzhQpQgd5KeCtzxw7qQ2InLHduxcZND0LXUJ0Y": {
+    "AppLambdaVersionhQ2oLJadoJx9mNRuPT2dIfc0Jx0uD8GoeZgGoOoyBA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "2jkzp5YJjpDGdJ8EGS+NUWF7g3P3SKpw26ckjK7hl6g="
+        "CodeSha256": "Z7c0vh4/onuLdrcBPggbQ1QcnWGOB4pHwbUDPmkcxSs="
       }
     },
     "ApiGatewayRestApi": {
@@ -290,7 +309,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1606529967622": {
+    "ApiGatewayDeployment1607550839196": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -350,7 +369,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionFHI1uzhQpQgd5KeCtzxw7qQ2InLHduxcZND0LXUJ0Y"
+        "Ref": "AppLambdaVersionhQ2oLJadoJx9mNRuPT2dIfc0Jx0uD8GoeZgGoOoyBA"
       }
     },
     "ServiceEndpoint": {
